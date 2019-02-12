@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    {% for hotel in hotels %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <h2><a class="article-title" href="#">{{ hotel.name }}</a></h2>
+          <small class="text-muted">{{ hotel.city }},</small>
+          <small class="text-muted">{{ hotel.state }},</small>
+          <small class="text-muted">{{ hotel.country }}</small>
+          <p class="article-content">{{ hotel.content }}</p>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+{% endblock content %}
