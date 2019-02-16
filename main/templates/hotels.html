@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    {% for hotel in hotels %}
+    {% for hotel in posts %}
     <article class="media content-section">
       <div class="media-body">
         <div class="article-metadata">
@@ -9,7 +9,8 @@
           <small class="text-muted">{{ hotel.city }},</small>
           <small class="text-muted">{{ hotel.state }},</small>
           <small class="text-muted">{{ hotel.country }}</small>
-          <p class="article-content">{{ hotel.content }}</p>
+          <p class="article-content">{{ hotel.rating }}</p>
+          <p class="article-content">{{ hotel.price_cat }}</p>
         </div>
       </div>
     </article>

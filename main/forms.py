@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from main.models import User
+from main.models import User, Hotel
 
 class RegisterForm(FlaskForm):
     username = StringField('Username',
@@ -60,3 +60,13 @@ class UpdateAccountForm(FlaskForm):
             user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('Email already exists.')
+
+
+class PostForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    city = StringField('City', validators=[DataRequired()])
+    state = StringField('State', validators=[DataRequired()])
+    country = StringField('Country', validators=[DataRequired()])
+    rating = IntegerField('Rating', validators=[DataRequired()])
+    price_cat = StringField('Price', validators=[DataRequired()])
+    submit = SubmitField('Add Hotel')

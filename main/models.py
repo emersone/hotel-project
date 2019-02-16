@@ -27,11 +27,10 @@ class Hotel(db.Model):
     country = db.Column(db.String(120), nullable = False)
     rating = db.Column(db.Integer, nullable = False)
     price_cat = db.Column(db.String(5), nullable = False)
-    #content = db.Column(db.Text, nullable = False)
 
     #How object is printed
     def __repr__(self):
-        return f"Hotel('{self.name}, {self.city}, {self.state}, {self.country}, {self.rating}, {self.price_cat}, {self.content}')"
+        return f"Hotel('{self.name}, {self.city}, {self.state}, {self.country}, {self.rating}, {self.price_cat}')"
 
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key = True)

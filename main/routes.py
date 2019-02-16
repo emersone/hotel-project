@@ -3,7 +3,7 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from main import app, db, bcrypt
-from main.forms import RegisterForm, LoginForm, UpdateAccountForm
+from main.forms import RegisterForm, LoginForm, UpdateAccountForm, PostForm
 from main.models import User, Hotel, Reservation
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -15,41 +15,8 @@ def home():
 @app.route('/hotels')
 @login_required
 def hotels():
-
-    content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam et pharetra velit, quis fermentum nisl. Donec quis est velit."
-
-    hotels = [
-        {
-            'name': "Luxury Hotel",
-            'city': "Beverly Hills",
-            'state': "CA",
-            'country': "USA",
-            'content': content
-        },
-        {
-            'name': "Tropical Paradise",
-            'city': "Papeete",
-            'state': "Bora Bora",
-            'country': "French Polynesia",
-            'content': content
-        },
-        {
-            'name': "Winter Lodge",
-            'city': "Whistler",
-            'state': "BC",
-            'country': "Canada",
-            'content': content
-        },
-        {
-            'name': "Modern Stay",
-            'city': "New York City",
-            'state': "NY",
-            'country': "USA",
-            'content': content
-        }
-    ]
-    # entities, next_cursor = list_of_hotels()
-    return render_template('hotels.html', hotels=hotels)
+    posts = Hotel.query.all()
+    return render_template('hotels.html', posts=posts)
 
 
 #New user registration
@@ -134,3 +101,32 @@ def account():
 @login_required
 def reservations():
     return render_template('reservations.html')
+
+
+#Add a new hotel
+#@app.route('/post/hotel', methods=['GET', 'POST'])
+#@login_required
+#def new_hotel():
+#    form = PostForm()
+#    if form.validate_on_submit():
+#        post = PostForm(name=form.name.data, city=form.city.data, state=form.state.data, country=form.country.data, rating=form.rating.data, price_cat=form.price_cat.data, owner=current_user)
+#        db.session.add(post)
+#        db.session.commit()
+#        flash('Your hotel has been added.', 'success')
+#        return redirect(url_for('home'))
+#    return render_template('create_hotel.html', title='New Hotel', form=form)
+
+
+
+@app.route("/post/new", methods=['GET', 'POST'])
+@login_required
+def new_hotel():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Hotel(name=form.name.data, city=form.city.data, state=form.state.data, country=form.country.data, rating=form.rating.data, price_cat=form.price_cat.data)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your hotel has been added.', 'success')
+        return redirect(url_for('hotels'))
+    return render_template('create_hotel.html', title='Add Hotel',
+                           form=form, legend='Add Hotel')
