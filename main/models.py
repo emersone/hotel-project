@@ -13,11 +13,25 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique = True, nullable = False)
     avatar = db.Column(db.String(20), nullable = False, default = 'default.jpg')
     password = db.Column(db.String(60), nullable = False)
-    reservations = db.relationship('Reservation', backref = 'owner', lazy = True)
+    is_owner = db.Column(db.Boolean, default = False)
+    reservations = db.relationship('Reservation', backref="author", lazy=True)
+    hotels = db.relationship('Hotel', backref='owner', lazy=True)
+
 
     #How object is printed
     def __repr__(self):
         return f"User('{self.username}, {self.email}, {self.avatar}')"
+
+
+class Reservation(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    date_made = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    #How object is printed
+    def __repr__(self):
+        return f"Reservation('{self.date_made}', {self.res_user_id})"
+
 
 class Hotel(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -27,16 +41,10 @@ class Hotel(db.Model):
     country = db.Column(db.String(120), nullable = False)
     rating = db.Column(db.Integer, nullable = False)
     price_cat = db.Column(db.String(5), nullable = False)
+    content = db.Column(db.Text, nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
 
     #How object is printed
     def __repr__(self):
-        return f"Hotel('{self.name}, {self.city}, {self.state}, {self.country}, {self.rating}, {self.price_cat}')"
-
-class Reservation(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    date_made = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
-
-    #How object is printed
-    def __repr__(self):
-        return f"Reservation('{self.date_made}', {self.user_id})"
+        return f"Hotel('{self.name}, {self.city}, {self.state}, {self.country}, {self.rating}, {self.price_cat}, {self.content}')"

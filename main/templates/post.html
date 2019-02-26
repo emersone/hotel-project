@@ -1,15 +1,12 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    {% for hotel in posts %}
     <article class="media content-section">
       <div class="media-body">
         <div class="article-metadata">
-          <h2><a class="article-title" href="{{ url_for('post', hotel_id=hotel.id) }}">{{ hotel.name }}</a></h2>
-          <h3>{{ hotel.city }}, {{ hotel.state }}, {{ hotel.country }}</h3>
+          <h2 class="article-title">{{ hotel.name }}</h2><h3>{{ hotel.city }}, {{ hotel.state }}, {{ hotel.country }}</h3>
           <p class="article-content">Stars: {{ hotel.rating }} <br> Price: {{ hotel.price_cat }} <br> Description: {{ hotel.content }}</p>
         </div>
       </div>
     </article>
-    {% endfor %}
 {% endblock content %}

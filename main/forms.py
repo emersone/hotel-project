@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, RadioField, DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from main.models import User, Hotel
+from main.models import User, Hotel, Reservation
 
 class RegisterForm(FlaskForm):
     username = StringField('Username',
@@ -14,17 +14,25 @@ class RegisterForm(FlaskForm):
                             validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password',
                                     validators=[DataRequired(), EqualTo('password')])
+
+    type = RadioField('Account Type', choices=[('owner', 'Hotel Owner'), ('user', 'Regular User')])
+
     submit = SubmitField('Register')
+
+
+
 
     #Validate username
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
+
         if user:
             raise ValidationError('Username already exists.')
 
     #Validate email
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
+
         if user:
             raise ValidationError('Email already exists.')
 
@@ -69,4 +77,10 @@ class PostForm(FlaskForm):
     country = StringField('Country', validators=[DataRequired()])
     rating = IntegerField('Rating', validators=[DataRequired()])
     price_cat = StringField('Price', validators=[DataRequired()])
+    content = StringField('Description', validators=[DataRequired()])
     submit = SubmitField('Add Hotel')
+
+
+class ReservationForm(FlaskForm):
+    date = DateField('Name', validators=[DataRequired()])
+    submit = SubmitField('Add Reservation')
