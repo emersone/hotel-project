@@ -7,7 +7,15 @@
         <div class="article-metadata">
           <h2><a class="article-title" href="{{ url_for('post', hotel_id=hotel.id) }}">{{ hotel.name }}</a></h2>
           <h3>{{ hotel.city }}, {{ hotel.state }}, {{ hotel.country }}</h3>
-          <p class="article-content">Stars: {{ hotel.rating }} <br> Price: {{ hotel.price_cat }} <br> Description: {{ hotel.content }}</p>
+          <p class="article-content">Stars: {{ hotel.rating }} <br> Price: {{ hotel.price_cat }}
+            <br> Price per night: ${{ hotel.price_night }}
+            <br> Description: {{ hotel.content }}</p>
+            <a target="_blank" href="{{ hotel.pic_1 }}">
+              <img src="{{ hotel.pic_1 }}" style="width:125px">
+            </a>
+            <br>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('new_reservation', hotel_id=hotel.id) }}">Reserve Room</a>
+
         </div>
       </div>
     </article>

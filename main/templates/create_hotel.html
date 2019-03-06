@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class ="content-section">
-    <form method="POST" action="">
+    <form method="POST" action="" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">{{ legend }}</legend>
@@ -85,6 +85,19 @@
                 {% endif %}
             </div>
             <div class="form-group">
+                {{ form.price_night.label(class="form-control-label") }}
+                {% if form.price_night.errors %}
+                    {{ form.price_night(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.price_night.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.price_night(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
                 {{ form.content.label(class="form-control-label") }}
                 {% if form.content.errors %}
                     {{ form.content(class="form-control form-control-lg is-invalid") }}
@@ -95,6 +108,19 @@
                     </div>
                 {% else %}
                     {{ form.content(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+              <a target="_blank" href="{{ pic_1 }}">
+                <img src="{{ pic_1 }}" style="width:125px">
+              </a>
+              <br><br>
+
+                {{ form.pic_1(class="form-control-file")}}
+                {% if form.pic_1.errors %}
+                    {% for error in form.pic_1.errors %}
+                        <span class="text-danger">{{ error }}</span><br>
+                    {% endfor %}
                 {% endif %}
             </div>
         </fieldset>

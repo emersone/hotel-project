@@ -5,7 +5,11 @@
       <div class="media-body">
         <div class="article-metadata">
           <h2 class="article-title">{{ hotel.name }}</h2><h3>{{ hotel.city }}, {{ hotel.state }}, {{ hotel.country }}</h3>
-          <p class="article-content">Stars: {{ hotel.rating }} <br> Price: {{ hotel.price_cat }} <br> Description: {{ hotel.content }}</p>
+          <p class="article-content">Stars: {{ hotel.rating }} <br> Price: {{ hotel.price_cat }} <br>Price per night: ${{ hotel.price_night }} <br>Description: {{ hotel.content }}
+
+            <a target="_blank" href="{{ pic_1 }}">
+              <img src="{{ pic_1 }}" style="width:125px">
+            </a>
           {% if hotel.owner_id == current_user.id %}
               <div>
                 <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_hotel', hotel_id=hotel.id) }}">Update</a>

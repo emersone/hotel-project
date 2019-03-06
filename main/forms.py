@@ -1,9 +1,12 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, RadioField, DateField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, RadioField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from main.models import User, Hotel, Reservation
+from wtforms.fields.html5 import DateField
+
+
 
 class RegisterForm(FlaskForm):
     username = StringField('Username',
@@ -77,10 +80,14 @@ class PostForm(FlaskForm):
     country = StringField('Country', validators=[DataRequired()])
     rating = IntegerField('Rating', validators=[DataRequired()])
     price_cat = StringField('Price', validators=[DataRequired()])
+    price_night = IntegerField('Price per night', validators=[DataRequired()])
     content = StringField('Description', validators=[DataRequired()])
+    pic_1 = FileField('Image', validators=[FileAllowed(['jpg', 'png'])])
+
     submit = SubmitField('Add Hotel')
 
 
 class ReservationForm(FlaskForm):
-    date = DateField('Name', validators=[DataRequired()])
+    check_in = DateField('Check-In Date', validators=[DataRequired()])
+    check_out = DateField('Check-Out Date', validators=[DataRequired()])
     submit = SubmitField('Add Reservation')

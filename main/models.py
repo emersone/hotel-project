@@ -7,6 +7,7 @@ from flask_login import UserMixin
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(20), unique = True, nullable = False)
@@ -25,12 +26,14 @@ class User(db.Model, UserMixin):
 
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    date_made = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+    check_in = db.Column(db.DateTime, nullable = False)
+    check_out = db.Column(db.DateTime, nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    hotel_info = db.Column(db.Integer, db.ForeignKey('hotel.id'), nullable=False)
 
     #How object is printed
     def __repr__(self):
-        return f"Reservation('{self.date_made}', {self.res_user_id})"
+        return f"Reservation('{self.check_in}, {self.check_out}, {self.user_id}, {self.id})"
 
 
 class Hotel(db.Model):
@@ -41,10 +44,14 @@ class Hotel(db.Model):
     country = db.Column(db.String(120), nullable = False)
     rating = db.Column(db.Integer, nullable = False)
     price_cat = db.Column(db.String(5), nullable = False)
+    price_night = db.Column(db.Integer, nullable = False)
     content = db.Column(db.Text, nullable=False)
+    pic_1 = db.Column(db.String(20), nullable = False, default = 'hotel_default.jpg')
+    #pic_2 = db.Column(db.String(20), nullable = True, default = 'default.jpg')
+    #pic_3 = db.Column(db.String(20), nullable = True, default = 'default.jpg')
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
+    reserved = db.relationship('Reservation', backref='reservation_made', lazy=True)
 
     #How object is printed
     def __repr__(self):
-        return f"Hotel('{self.name}, {self.city}, {self.state}, {self.country}, {self.rating}, {self.price_cat}, {self.content}')"
+        return f"Hotel('{self.name}, {self.city}, {self.state}, {self.country}, {self.rating}, {self.price_cat}, {self.price_night}, {self.content}, {self.pic_1}, {self.reserved}')"

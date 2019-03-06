@@ -2,13 +2,41 @@
 
 {% block content %}
 <div class ="content-section">
-    <form method="POST" action="">
+    <form method="POST" action="" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">New Reservation</legend>
+            <h3 class="article-title">You are reserving a room at {{ hotel.name }} in {{ hotel. city }}, {{ hotel.state }}, {{ hotel.country }}.</h3><br>
+
             <div class="form-group">
-              <input type="date">
-            </div>
+              {{ form.check_in.label(class="form-control-label") }}
+                {% if form.check_in.errors %}
+                  {{ form.check_in(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                      {% for error in form.check_in.errors %}
+                        <span>{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                {% else %}
+                  {{ form.check_in(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                {{ form.check_out.label(class="form-control-label") }}
+                  {% if form.check_out.errors %}
+                    {{ form.check_out(class="form-control form-control-lg is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.check_out.errors %}
+                          <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                  {% else %}
+                    {{ form.check_out(class="form-control form-control-lg") }}
+                  {% endif %}
+                </div>
         </fieldset>
         <div class="form-group">
           {{ form.submit(class='btn btn-outline-info') }}

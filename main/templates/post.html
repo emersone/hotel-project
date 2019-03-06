@@ -5,7 +5,13 @@
       <div class="media-body">
         <div class="article-metadata">
           <h2 class="article-title">{{ hotel.name }}</h2><h3>{{ hotel.city }}, {{ hotel.state }}, {{ hotel.country }}</h3>
-          <p class="article-content">Stars: {{ hotel.rating }} <br> Price: {{ hotel.price_cat }} <br> Description: {{ hotel.content }}</p>
+          <p class="article-content">Stars: {{ hotel.rating }} <br> Price: {{ hotel.price_cat }}
+            <br> Price per night: $ {{ hotel.price_night }}
+            <br> Description: {{ hotel.content }}
+            <a target="_blank" href="{{ pic_1 }}">
+              <img src="{{ pic_1 }}" style="width:125px">
+            </a>
+
         </div>
       </div>
     </article>
