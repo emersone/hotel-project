@@ -90,4 +90,4 @@ class PostForm(FlaskForm):
 class ReservationForm(FlaskForm):
     check_in = DateField('Check-In Date', validators=[DataRequired()])
     check_out = DateField('Check-Out Date', validators=[DataRequired()])
-    submit = SubmitField('Add Reservation')
+    submit = SubmitField('Submit')

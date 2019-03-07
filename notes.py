@@ -1,4 +1,12 @@
 
+            <h2><a class="article-title" href="{{ url_for('post', hotel_id=hotel.id) }}">{{ hotel.name }}</a></h2>
+            <h3>{{ hotel.city }}, {{ hotel.state }}, {{ hotel.country }}</h3>
+
+
+                    <h3 class="article-title">You are reserving a room at {{ hotel.name }} in {{ hotel. city }}, {{ hotel.state }}, {{ hotel.country }}.</h3><br>
+
+
+
 #User adds new reservation
 @app.route("/create_reservation", methods=['GET', 'POST'])
 @login_required

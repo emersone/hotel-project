@@ -10,6 +10,7 @@
             <h3>{{ hotel.city }}, {{ hotel.state }}, {{ hotel.country }}</h3>
             <p class="article-content">Check In Date: {{ reservation.check_in.strftime("%Y/%m/%d") }}</p
             <p class="article-content">Check Out Date: {{ reservation.check_out.strftime("%Y/%m/%d") }}</p>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_reservations', reservation_id=reservation.id) }}">Update</a>
             <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal{{ reservation.id }}">Delete</button>
         </div>
       </div>

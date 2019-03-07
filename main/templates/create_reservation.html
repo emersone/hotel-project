@@ -7,7 +7,7 @@
         {{ form.csrf_token }}
 
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">New Reservation</legend>
+            <legend class="border-bottom mb-4">{{ legend }}</legend>
             <h3 class="article-title">You are reserving a room at {{ hotel.name }} in {{ hotel. city }}, {{ hotel.state }}, {{ hotel.country }}.</h3><br>
 
             <div class="form-group">

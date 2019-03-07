@@ -356,28 +356,41 @@ def new_reservation(hotel_id):
     hotel = db.session.query(Hotel).filter(Hotel.id==hotel_id).first()
 
     form = ReservationForm()
-
     if form.validate_on_submit():
-        print('here2')
-
         reservation = Reservation(check_in=form.check_in.data,
                                   check_out=form.check_out.data,
                                   user_id=current_user.id, hotel_info=hotel.id)
-
         db.session.add(reservation)
         db.session.commit()
         flash('Your reservation has been made.', 'success')
         return redirect(url_for('reservations'))
 
-    return render_template('create_reservation.html', title='Add Reservation', hotel=hotel, form=form)
-
+    return render_template('create_reservation.html', title='Add Reservation', legend="Add Reservation", hotel=hotel, form=form)
 
 
 #Update a user's hotel reservation
 @app.route('/reservations/<reservation_id>/update', methods=['GET', 'POST'])
 @login_required
-def update_reservations():
-    print('hello')
+def update_reservations(reservation_id):
+    reservation = Reservation.query.get_or_404(reservation_id)
+    hotel_info = reservation.hotel_info
+
+    #Return hotel that user is trying to reserve
+    hotel = db.session.query(Hotel).filter(Hotel.id==hotel_info).first()
+
+    form = ReservationForm()
+    if form.validate_on_submit():
+        reservation.check_in = form.check_in.data
+        reservation.check_out = form.check_out.data
+        db.session.commit()
+        flash('Your reservation has been updated.', 'success')
+        return redirect(url_for('reservations'))
+    elif request.method == 'GET':
+        form.check_in.data = reservation.check_in
+        form.check_out.data = reservation.check_out
+
+    return render_template('create_reservation.html', title='Update Reservation',
+                           legend="Update Reservation", hotel=hotel, form=form)
 
 
 #Delete a user's hotel reservation
@@ -386,7 +399,6 @@ def update_reservations():
 def delete_reservations(reservation_id):
 
     reservation = Reservation.query.get_or_404(reservation_id)
-    test = Reservation.query.get_or_404(reservation_id)
 
     db.session.delete(reservation)
     db.session.commit()

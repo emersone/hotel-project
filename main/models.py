@@ -33,7 +33,7 @@ class Reservation(db.Model):
 
     #How object is printed
     def __repr__(self):
-        return f"Reservation('{self.check_in}, {self.check_out}, {self.user_id}, {self.id})"
+        return f"Reservation('{self.check_in}, {self.check_out}, {self.user_id}, {self.id}, {self.hotel_info})"
 
 
 class Hotel(db.Model):
